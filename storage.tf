@@ -25,11 +25,14 @@ resource "aws_elasticache_cluster" "app_cache" {
   node_type            = "cache.t2.micro"
   num_cache_nodes      = 1
   parameter_group_name = aws_elasticache_parameter_group.app_cache_param_group.name
+  security_group_ids   = [aws_security_group.elasticache_access_sg.id]
+  subnet_group_name    = aws_elasticache_subnet_group.app_subnet_group.name
 
   tags = {
     Name = "AppElastiCache"
   }
 }
+
 
 
 resource "aws_s3_bucket" "app_bucket" {
